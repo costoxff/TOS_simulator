@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/eliminateGem.wav-5f5f17bc56060a77dcd113ca3bc9ca3d.sample"
+
+[deps]
+
+source_file="res://myAsset/AudioClip/eliminateGem.wav"
+dest_files=[ "res://.import/eliminateGem.wav-5f5f17bc56060a77dcd113ca3bc9ca3d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
