@@ -14,4 +14,4 @@ format = 1
 tile_data = PoolIntArray( 0, 1, 0, 65536, 0, 0, 393216, 2, 0 )
 
 [node name="gem" parent="." instance=ExtResource( 1 )]
-position = Vector2( 45, 126 )
+position = Vector2( 673.105, 193.693 )
