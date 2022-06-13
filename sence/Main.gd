@@ -4,6 +4,7 @@ var gem_tscn = load("res://sence/gem.tscn")
 
 # Declare member variables here. Examples:
 var tile_space = []
+var tile_size = 64
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,10 +17,15 @@ func _ready():
 	for row in range(5):
 		for col in range(6):
 			var gem = tile_space[row][col]
-			gem.position = Vector2(50 + col * 85, 90 * row + 100)
+			gem.position = gem.position.snapped(Vector2.ONE * tile_size)
+			gem.position += Vector2.ONE * (tile_size / 2)
+			gem.position += Vector2.RIGHT * col + Vector2.DOWN * row
 			add_child(gem)
+			
+	var a = $TileMap.BLEND_MODE_ADD
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	
+	pass
