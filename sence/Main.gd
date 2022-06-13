@@ -19,7 +19,6 @@ func _ready():
 			var gem = tile_space[row][col]
 			gem.position = gem.position.snapped(Vector2.ONE * tile_size)
 			gem.position += Vector2.ONE * (tile_size/2)
-			#print(Vector2.RIGHT * col)
 			gem.position += (Vector2.RIGHT * col + Vector2.DOWN * (row+1)) * tile_size
 			
 			add_child(gem)

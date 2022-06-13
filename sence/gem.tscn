@@ -1,23 +1,21 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://sence/gem.gd" type="Script" id=1]
-[ext_resource path="res://myAsset/Texture2D/gems/normalGems/bule.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 62.1165
+radius = 42.589
 
-[node name="gem" type="Sprite"]
+[node name="Gem" type="Area2D"]
 scale = Vector2( 0.6, 0.6 )
-texture = ExtResource( 2 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Sprite" type="Sprite" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.890839, 4.4545 )
 shape = SubResource( 1 )
 
-[connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]
+[connection signal="input_event" from="." to="." method="_on_Gem_input_event"]
