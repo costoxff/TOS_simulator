@@ -19,7 +19,7 @@ func _ready():
 			var gem = tile_space[row][col]
 			gem.position = gem.position.snapped(Vector2.ONE * tile_size)
 			gem.position += Vector2.ONE * (tile_size/2)
-			gem.position += (Vector2.RIGHT * col + Vector2.DOWN * (row+1)) * tile_size
+			gem.position += (Vector2.RIGHT * col + Vector2.DOWN * (row)) * tile_size + $TileMap.position
 			
 			add_child(gem)
 			
