@@ -4,7 +4,7 @@
 [ext_resource path="res://myAsset/Texture2D/gems/normalGems/bule.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 42.589
+radius = 53.2287
 
 [node name="Gem" type="Area2D"]
 scale = Vector2( 0.6, 0.6 )
@@ -14,6 +14,7 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 1.1, 1.1 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

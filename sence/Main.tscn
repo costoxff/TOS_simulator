@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://myAsset/Texture2D/gameplay_background_T512_RGB4.png" type="Texture" id=1]
 [ext_resource path="res://myAsset/Texture2D/gems/puzzleTex_T512_RGBA4.png" type="Texture" id=2]
 [ext_resource path="res://sence/Main.gd" type="Script" id=3]
 [ext_resource path="res://sence/TileMap.gd" type="Script" id=4]
-[ext_resource path="res://sence/gem.tscn" type="PackedScene" id=5]
 
 [sub_resource type="TileSet" id=1]
 0/name = "puzzleTex_T512_RGBA4.png 0"
@@ -100,6 +99,7 @@ texture = ExtResource( 1 )
 centered = false
 
 [node name="TileMap" type="TileMap" parent="."]
+modulate = Color( 1, 1, 1, 0.498039 )
 position = Vector2( 0, 35 )
 scale = Vector2( 0.67, 0.67 )
 tile_set = SubResource( 1 )
@@ -107,6 +107,3 @@ cell_size = Vector2( 128, 128 )
 cell_custom_transform = Transform2D( 85, 0, 0, 85, 0, 0 )
 format = 1
 script = ExtResource( 4 )
-
-[node name="Gem" parent="." instance=ExtResource( 5 )]
-position = Vector2( 707.688, 160.009 )
