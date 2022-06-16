@@ -31,7 +31,6 @@ func _ready():
 			gem.last_info["type"] = gem.type
 			gem.last_info["pos"] = gem.position
 			
-#			gem.connect("not_selected", self, "_on_Gem_not_selected")
 			gem.connect("is_selected", self, "_on_Gem_is_selected")
 			add_child(gem)
 
@@ -42,13 +41,9 @@ func _process(delta):
 		for col in range(6):
 			var gem = gem_tilemap[row][col]
 			if gem.selected:
-#				print(last_selected_gem)
 				$TileMap.set_cell(col, row, gem.type)
 				move_child(gem, get_child_count() - 1)
-				# TODO
-				# trying not to run for all the loop when reset gem on tilemap
 
-	
 
 # gem no_selected signal
 func _on_Gem_not_selected(gem):
@@ -57,9 +52,6 @@ func _on_Gem_not_selected(gem):
 	var col = gem.last_info["tile_pos"][1]
 	$TileMap.set_cell(col, row, -1)
 	print("release:", gem)
-#	if gem.last_info["selected"]:
-#		gem.disconnect("gem_contact", self, "_on_Gem_contact")
-#		gem.last_info["selected"] = false
 	gem.disconnect("gem_contact", self, "_on_Gem_contact")
 	gem.disconnect("not_selected", self, "_on_Gem_not_selected")
 
