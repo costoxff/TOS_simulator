@@ -5,19 +5,15 @@ var gem_tscn = load("res://sence/gem.tscn")
 # Declare member variables here. Examples:
 var gem_tilemap = []
 var tile_size = 85
-var first_move = false
 	
 func get_gem(row: int, col: int):
 	return gem_tilemap[row][col]
-	
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
 	
-#	for x in range(6):
-#		for y in range(5):
-#			$TileMap.set_cell(x, y, (randi() - 4) % 6)
 	for col in range(5):
 		var row_list = []
 		for row in range(6):
@@ -33,12 +29,11 @@ func _ready():
 			
 			gem.last_info["tile_pos"] = [row, col]
 			gem.last_info["type"] = gem.type
-			gem.last_info["last_pos"] = gem.position
+			gem.last_info["pos"] = gem.position
 			
-			gem.connect("not_selected", self, "_on_Gem_not_selected")
+#			gem.connect("not_selected", self, "_on_Gem_not_selected")
+			gem.connect("is_selected", self, "_on_Gem_is_selected")
 			add_child(gem)
-	
-	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -50,21 +45,44 @@ func _process(delta):
 #				print(last_selected_gem)
 				$TileMap.set_cell(col, row, gem.type)
 				move_child(gem, get_child_count() - 1)
-				first_move = true
 				# TODO
 				# trying not to run for all the loop when reset gem on tilemap
-				
-				
-func gem_position_swap(gem1, gem2):
-	var pos_tmp = gem1.position
-	gem1.position = gem2.position
-	gem2.position = pos_tmp
+
 	
-	
-func _on_Gem_not_selected(gem_release):
-	print('do something')
-	gem_release.position = gem_release.last_info["last_pos"]
-	var row = gem_release.last_info["tile_pos"][0]
-	var col = gem_release.last_info["tile_pos"][1]
+
+# gem no_selected signal
+func _on_Gem_not_selected(gem):
+	gem.position = gem.last_info["pos"]
+	var row = gem.last_info["tile_pos"][0]
+	var col = gem.last_info["tile_pos"][1]
 	$TileMap.set_cell(col, row, -1)
+	print("release:", gem)
+#	if gem.last_info["selected"]:
+#		gem.disconnect("gem_contact", self, "_on_Gem_contact")
+#		gem.last_info["selected"] = false
+	gem.disconnect("gem_contact", self, "_on_Gem_contact")
+	gem.disconnect("not_selected", self, "_on_Gem_not_selected")
+
+# must select before contact
+func _on_Gem_is_selected(gem):
+	print("select:", gem)
+	gem.last_info["selected"] = true
+	gem.connect("gem_contact", self, "_on_Gem_contact")
+	gem.connect("not_selected", self, "_on_Gem_not_selected")
+
+# after selecting and contacting
+func _on_Gem_contact(gem_hold, gem_contact):
+	print("hold:", gem_hold, " contact:", gem_contact)
+#	var pos_tmp = gem_select.last_info["pos"]
+#	gem_select.last_info["pos"] = gem_contact.last_info["pos"]
+#	gem_contact.last_info["pos"] = pos_tmp
+#
+#	var tile_pos_tmp = gem_select.last_info["tile_pos"]
+#	gem_select.last_info["tile_pos"] = gem_contact.last_info["tile_pos"]
+#	gem_contact.last_info["tile_pos"] = pos_tmp
+	
 	pass
+#	if gem_contact.selected:
+#		print("selected ", gem_contact)
+#	else:
+#		print("not selected ", gem_contact)

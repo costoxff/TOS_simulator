@@ -1,6 +1,8 @@
 extends Area2D
 
 signal not_selected(gem)
+signal is_selected(gem)
+signal gem_contact(gem_hold, gem_contact)
 
 # texture pre-load
 var blue_gem = preload("res://myAsset/Texture2D/gems/normalGems/bule.png")
@@ -13,16 +15,19 @@ var pink_gem = preload("res://myAsset/Texture2D/gems/normalGems/pink.png")
 var GEM_TYPE_L = [blue_gem, red_gem, green_gem, yellow_gem, dark_gem, pink_gem]
 
 enum{BLUE, RED, GREEN, YELLOW, DARK, PINK}
+
+# attribute
 var selected = false
 var current_position = null
 var type = null
 var drag_speed = 45
 var last_info = {
+	"selected": false,
 	"tile_pos": [0, 0],
 	"type": 0,
-	"last_pos": Vector2(0, 0)}
+	"pos": Vector2(0, 0)}
 
-	
+
 func _ready():
 	# random texture
 	randomize()
@@ -56,11 +61,15 @@ func _on_Gem_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			selected = true
+			emit_signal("is_selected", self)
 		else:
 			# FIXME 
 			# when mouse input release out of the region of collisionshape
 			# gem instance stick on mouse cursor.
 			selected = false
-			print('emit')
 			emit_signal("not_selected", self)
-			print('emit_last')
+
+
+func _on_Gem_area_entered(area):
+#	print(area, self)
+	emit_signal("gem_contact", self, area)
