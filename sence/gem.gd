@@ -1,5 +1,7 @@
 extends Area2D
 
+signal not_selected(gem)
+
 # texture pre-load
 var blue_gem = preload("res://myAsset/Texture2D/gems/normalGems/bule.png")
 var red_gem = preload("res://myAsset/Texture2D/gems/normalGems/red.png")
@@ -14,11 +16,11 @@ enum{BLUE, RED, GREEN, YELLOW, DARK, PINK}
 var selected = false
 var current_position = null
 var type = null
-var gem_drag_speed = 45
-
-
-func send_argument(kwarg: Dictionary):
-	var gem_type = kwarg["gem_type"]
+var drag_speed = 45
+var last_info = {
+	"tile_pos": [0, 0],
+	"type": 0,
+	"last_pos": Vector2(0, 0)}
 
 	
 func _ready():
@@ -47,10 +49,7 @@ func _ready():
 
 func _physics_process(delta):
 	if selected:
-		global_position = lerp(global_position, get_global_mouse_position(), gem_drag_speed * delta)
-
-func position_exchange():
-	pass
+		global_position = lerp(global_position, get_global_mouse_position(), drag_speed * delta)
 
 # signal
 func _on_Gem_input_event(viewport, event, shape_idx):
@@ -62,3 +61,6 @@ func _on_Gem_input_event(viewport, event, shape_idx):
 			# when mouse input release out of the region of collisionshape
 			# gem instance stick on mouse cursor.
 			selected = false
+			print('emit')
+			emit_signal("not_selected", self)
+			print('emit_last')
