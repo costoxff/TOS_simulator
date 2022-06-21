@@ -22,7 +22,6 @@ var current_position = null
 var type = null
 var drag_speed = 45
 var last_info = {
-	"selected": false,
 	"tile_pos": [0, 0],
 	"type": 0,
 	"pos": Vector2(0, 0)}
@@ -72,4 +71,11 @@ func _on_Gem_input_event(viewport, event, shape_idx):
 
 func _on_Gem_area_entered(area):
 #	print(area, self)
-	emit_signal("gem_contact", self, area)
+#	emit_signal("gem_contact", self, area)
+	pass
+
+
+func _on_Area2D_area_entered(area: Node):
+	print("ch ", area)
+	emit_signal("gem_contact", self, area.get_parent())
+	pass
