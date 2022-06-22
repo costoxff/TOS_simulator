@@ -1,26 +1,7 @@
 extends Node
 
 var gem_tscn = load("res://sence/gem.tscn")
-
-# inner class
-class Matric2D:
-	var matric = [] setget ,get_all
-	func _init(rows: int, columns: int, tscn):
-		for row in range(rows):
-			var row_list = []
-			for col in range(columns):
-				row_list.append(tscn.instance())
-			matric.append(row_list)
-	
-	func get_all():
-		return matric
-		
-	func swap_ele(p1: Array, p2: Array):
-		# p1: point1[row, column]
-		# p2: point2[row, column]
-		var obj_tmp = matric[p1[0]][p1[1]]
-		matric[p1[0]][p1[1]] = matric[p2[0]][p2[1]]
-		matric[p2[0]][p2[1]] = obj_tmp
+var Matric2D = load("res://src/Matric2D.gd")
 
 # variable
 var gem_matric2D = null
@@ -40,6 +21,9 @@ func fake_gem_display(gem, display: bool):
 
 
 # Called when the node enters the scene tree for the first time.
+func _init():
+	print()
+
 func _ready():
 	randomize()
 	
@@ -50,7 +34,7 @@ func _ready():
 			var gem = gem_matric2D.get_all()[row][col]
 			gem.position = gem.position.snapped(Vector2.ONE * tile_size)
 			gem.position += Vector2.ONE * (tile_size/2)
-			gem.position += (Vector2.RIGHT * col + Vector2.DOWN * (row)) * tile_size + $TileMap.position
+			gem.position += (Vector2.RIGHT * col + Vector2.DOWN * row) * tile_size + $TileMap.position
 			
 			gem.last_info["tile_pos"] = [row, col]
 			gem.last_info["type"] = gem.type
@@ -112,5 +96,3 @@ func _on_Gem_contact(gem_hold, gem_contact):
 	gem_swap = gem_hold
 	
 	is_swap = true
-
-	pass
