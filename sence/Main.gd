@@ -6,9 +6,6 @@ var Matric2D = load("res://src/Matric2D.gd")
 # variable
 var gem_matric2D = null
 var tile_size = 85
-var is_swap = false
-var gem_swaped = null
-var gem_swap = null
 
 # function
 func fake_gem_display(gem, display: bool):
@@ -46,11 +43,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if is_swap:
-		if (gem_swaped != null) and (gem_swap != null):
-			gem_swaped.position = gem_swaped.last_info["pos"]
-			fake_gem_display(gem_swap, true)
-		is_swap = false
 	pass
 				
 
@@ -92,7 +84,5 @@ func _on_Gem_contact(gem_hold, gem_contact):
 	gem_hold.last_info["pos"] = gem_contact.last_info["pos"]
 	gem_contact.last_info["pos"] = pos_tmp
 	
-	gem_swaped = gem_contact
-	gem_swap = gem_hold
-	
-	is_swap = true
+	gem_contact.position = gem_contact.last_info["pos"]
+	fake_gem_display(gem_hold, true)
