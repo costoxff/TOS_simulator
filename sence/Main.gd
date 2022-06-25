@@ -2,10 +2,11 @@ extends Node
 
 var gem_tscn = load("res://sence/gem.tscn")
 var Matric2D = load("res://src/Matric2D.gd")
+var gem_matric2D = Matric2D.new(5, 6, gem_tscn)
 
 # variable
-var gem_matric2D = null
 var tile_size = 85
+
 
 # function
 func fake_gem_display(gem, display: bool):
@@ -15,16 +16,17 @@ func fake_gem_display(gem, display: bool):
 		$TileMap.set_cell(col, row, gem.type)
 	else:
 		$TileMap.set_cell(col, row, -1)
+		
+func swap2ele(ele1, ele2):
+	return [ele2, ele1]
 
 
 # Called when the node enters the scene tree for the first time.
 func _init():
-	print()
+	pass
 
 func _ready():
 	randomize()
-	
-	gem_matric2D = Matric2D.new(5, 6, gem_tscn)
 
 	for row in range(5):
 		for col in range(6):
@@ -41,7 +43,6 @@ func _ready():
 			add_child(gem)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
 				
@@ -76,13 +77,23 @@ func _on_Gem_contact(gem_hold, gem_contact):
 	var col_c = gem_contact.last_info["tile_pos"][1]
 	gem_matric2D.swap_ele([row_h, col_h], [row_c, col_c])
 	
-	var tile_pos_tmp = gem_hold.last_info["tile_pos"]
-	gem_hold.last_info["tile_pos"] = gem_contact.last_info["tile_pos"]
-	gem_contact.last_info["tile_pos"] = tile_pos_tmp
 	
-	var pos_tmp = gem_hold.last_info["pos"]
-	gem_hold.last_info["pos"] = gem_contact.last_info["pos"]
-	gem_contact.last_info["pos"] = pos_tmp
+	var tmp_list = null
+	tmp_list = swap2ele(gem_hold.last_info["tile_pos"],
+						gem_contact.last_info["tile_pos"])
+	gem_hold.last_info["tile_pos"] = tmp_list[0]
+	gem_contact.last_info["tile_pos"] = tmp_list[1]
 	
-	gem_contact.position = gem_contact.last_info["pos"]
+	tmp_list = swap2ele(gem_hold.last_info["pos"],
+						gem_contact.last_info["pos"])
+	gem_hold.last_info["pos"] = tmp_list[0]
+	gem_contact.last_info["pos"] = tmp_list[1]
+	
+	$Tween.interpolate_property(gem_contact, 
+								"position", 
+								gem_contact.position, 
+								gem_contact.last_info["pos"],
+								0.05)
+	$Tween.start()
+#	gem_contact.position = gem_contact.last_info["pos"]
 	fake_gem_display(gem_hold, true)
