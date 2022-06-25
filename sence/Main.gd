@@ -95,5 +95,5 @@ func _on_Gem_contact(gem_hold, gem_contact):
 								gem_contact.last_info["pos"],
 								0.05)
 	$Tween.start()
-#	gem_contact.position = gem_contact.last_info["pos"]
+	gem_contact.position = gem_contact.last_info["pos"]
 	fake_gem_display(gem_hold, true)
