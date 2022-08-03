@@ -8,6 +8,22 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Area2D",
+"class": "Gem",
+"language": "GDScript",
+"path": "res://sence/gem.gd"
+}, {
+"base": "Node",
+"class": "Matrix2D",
+"language": "GDScript",
+"path": "res://src/Matrix2D.gd"
+} ]
+_global_script_class_icons={
+"Gem": "",
+"Matrix2D": ""
+}
+
 [application]
 
 config/name="TOS Simulator"

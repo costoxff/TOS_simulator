@@ -1,8 +1,11 @@
 extends Area2D
 
+class_name Gem
+
 signal not_selected(gem)
 signal is_selected(gem)
 signal gem_contact(gem_hold, gem_contact)
+
 
 # texture pre-load
 var blue_gem = preload("res://myAsset/Texture2D/gems/normalGems/bule.png")
@@ -17,17 +20,16 @@ var GEM_TYPE_L = [blue_gem, red_gem, green_gem, yellow_gem, dark_gem, pink_gem]
 enum{BLUE, RED, GREEN, YELLOW, DARK, PINK}
 
 # attribute
+const drag_speed = 60
 var selected = false
 var current_position = null
 var type = null
-var drag_speed = 45
 var last_info = {
 	"tile_pos": [0, 0],
 	"type": 0,
 	"pos": Vector2(0, 0)}
 
-
-func _ready():
+func random_type() -> void:
 	# random texture
 	randomize()
 	# randi(): Generates a pseudo-random 32-bit unsigned integer between 0 and 4294967295 (inclusive)
@@ -48,6 +50,10 @@ func _ready():
 		type = DARK
 	else:
 		type = PINK
+	last_info["type"] = type
+
+func _ready():
+	random_type()
 		
 	current_position = position
 
@@ -55,7 +61,7 @@ func _physics_process(delta):
 	if selected:
 		global_position = lerp(global_position, get_global_mouse_position(), drag_speed * delta)
 
-# signal
+# event
 func _on_Gem_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		if event.is_pressed():
@@ -69,13 +75,6 @@ func _on_Gem_input_event(viewport, event, shape_idx):
 			emit_signal("not_selected", self)
 
 
-func _on_Gem_area_entered(area):
-#	print(area, self)
-#	emit_signal("gem_contact", self, area)
-	pass
-
-
-func _on_Area2D_area_entered(area: Node):
-	print("ch ", area)
-	emit_signal("gem_contact", self, area.get_parent())
+func _on_Area2D_area_entered(area: Area2D):
+	emit_signal("gem_contact", self, area)
 	pass

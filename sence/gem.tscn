@@ -4,10 +4,10 @@
 [ext_resource path="res://myAsset/Texture2D/gems/normalGems/bule.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 35.5765
+radius = 14.1973
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 50.8523
+radius = 45.9673
 
 [node name="Gem" type="Area2D"]
 scale = Vector2( 0.6, 0.6 )
@@ -22,17 +22,19 @@ scale = Vector2( 1.1, 1.1 )
 texture = ExtResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 2
+collision_layer = 0
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+position = Vector2( 0, 10 )
 shape = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( 0.890839, 4.4545 )
 shape = SubResource( 2 )
 
-[connection signal="area_entered" from="." to="." method="_on_Gem_area_entered"]
 [connection signal="input_event" from="." to="." method="_on_Gem_input_event"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
