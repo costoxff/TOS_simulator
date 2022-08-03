@@ -1,3 +1,3 @@
 # TOS Simulator
 
-This side project is under developement.
+a pratice to familiar Godot
