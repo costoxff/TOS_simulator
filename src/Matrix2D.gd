@@ -174,9 +174,6 @@ func dropped(position_table: Array, tween: Tween):
 				col_tmp.append(false)
 		drop_table.append(col_tmp)
 	
-	for i in drop_table:
-		print(i)
-	
 	var drop_groups: Array
 	for col in range(glo_cols):
 		var drop_tmp: Array
@@ -206,19 +203,4 @@ func dropped(position_table: Array, tween: Tween):
 										position_table[row][col],
 										0.2)
 			tween.start()
-			
-			
-		
-#	for col in range(glo_cols):
-#		var col_tmp: Array
-#		for row in range(glo_rows-1, -1, -1):
-#			gem = matrix[row][col]
-#			if gem.is_visible():
-#				col_tmp.append(true)
-#		for i in range(5 - col_tmp.size()):
-#			col_tmp.append(false)
-#		col_tmp.invert()
-#		for j in range(glo_rows):
-#			drop_table[j][col] = col_tmp[j]
-	
-	
+

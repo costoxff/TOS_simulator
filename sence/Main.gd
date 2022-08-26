@@ -57,16 +57,9 @@ func _on_Gem_not_selected(gem):
 	print(result)
 	gem_matrix.move_to_up()
 	gem_matrix.dropped(global_position, $Tween)
-	
-	
-#	for i in range(5):
-#		print(gem_matrix2D.get_all()[i])
-	
-#	var labeling_m = gem_matric2D.labeling()
 
 # must select before contact
 func _on_Gem_is_selected(gem):
-	print("select:", gem)
 	fake_gem_display(gem, true)
 	move_child(gem, get_child_count() - 1) # move to top layer
 	gem.connect("gem_contact", self, "_on_Gem_contact")
@@ -75,10 +68,8 @@ func _on_Gem_is_selected(gem):
 
 # after selecting and contacting
 func _on_Gem_contact(gem_hold, gem_contact):
-	print("hold:", gem_hold, " contact:", gem_contact)
 	fake_gem_display(gem_hold, false)
 	
-
 	# swap position
 	var row_h = gem_hold.last_info["tile_pos"][0]
 	var col_h = gem_hold.last_info["tile_pos"][1]
