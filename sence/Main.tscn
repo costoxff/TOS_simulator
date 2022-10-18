@@ -110,3 +110,7 @@ format = 1
 
 [node name="GemDelTimer" type="Timer" parent="."]
 wait_time = 0.3
+
+[node name="DroppedTween" type="Tween" parent="."]
+playback_speed = 0.8
+playback/speed = 0.8

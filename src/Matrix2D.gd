@@ -6,6 +6,7 @@ class_name Matrix2D
 var matrix: Array = [] setget ,get_all
 var glo_cols: int # global columns variable
 var glo_rows: int # global rows variable
+var tmp_bfs_groups: Array = []
 
 func _init(rows: int, columns: int, tscn):
 	glo_cols = columns
@@ -129,7 +130,8 @@ func bfs_groups() -> Array:
 			queue.append([row, col + 1])  # go right
 			queue.append([row - 1, col])  # go up
 			queue.append([row + 1, col])  # go down
-		can_del_stack.append(can_del_group)
+		if not can_del_group.empty():
+			can_del_stack.append(can_del_group)
 		
 	if can_del_stack.empty():
 		return []
@@ -137,10 +139,10 @@ func bfs_groups() -> Array:
 
 # if eliminated done retrun true
 func eliminated(timer: Timer):
-	var gem_groups = bfs_groups()
+	var gem_groups = tmp_bfs_groups
 	var gem: Gem
 	if gem_groups.empty():
-		return
+		return false
 		
 	for group in gem_groups:
 		for pos in group:
@@ -198,9 +200,15 @@ func dropped(position_table: Array, tween: Tween):
 				gem.random_type()
 			gem.last_info["type"] = gem.type
 			gem.last_info["pos"] = position_table[row][col]
-			tween.interpolate_property(gem, "position", 
-										gem.get_position(),
-										position_table[row][col],
-										0.2)
+			tween.interpolate_property(
+				gem, "position", 
+				gem.get_position(), position_table[row][col],
+				0.2)
 			tween.start()
+	
+	yield(tween, "tween_all_completed")
+			
 
+func been_eliminated() -> bool:
+	tmp_bfs_groups = bfs_groups()
+	return tmp_bfs_groups.empty()
