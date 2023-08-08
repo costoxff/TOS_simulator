@@ -4,8 +4,9 @@
 
 ## Description
 
-A pratice to familiar with Godot.
-The basic concept is to used RayCast detecting where the gem is at least three in line, but I use BFS instead.
+A pratice to be familiar with Godot.
+The basic concept is to used RayCast detecting if there were at least three gems in a line, but I use Raycast with BFS instead.
+The Raycast in Godot doesn't like in Unity, it can only return the first collider when casting.
 
 And it's all I can do in this project, I might not update in future.
 
